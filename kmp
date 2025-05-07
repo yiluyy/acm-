@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e6+10;
+char s1[N], s2[N];
+int n, m;
+int nexx[N];
+
+void ne(){
+	nexx[1] = 0;
+	for (int i = 2, j = 0; i <= m; i++){
+		while (j && s2[i] != s2[j+1]) j = nexx[j];
+		if (s2[i] == s2[j+1]) j++;
+		nexx[i] = j;
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	cin>>s1+1>>s2+1;
+	n = strlen(s1+1);
+	m = strlen(s2+1);
+	ne();
+	for (int i = 1, j = 0; i <= n; i++){
+		while (j && s1[i] != s2[j+1]) j = nexx[j];
+		if (s1[i] == s2[j+1]) j++;
+		if (j == m) cout<<i-m+1<<endl;
+	}
+	for (int i = 1; i <= m; i++) cout<<nexx[i]<<' ';
+	return 0;
+}
